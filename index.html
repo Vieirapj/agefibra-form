@@ -3,70 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Formulário de Interesse - 1000 Megas</title>
+  <title>Formulário de Interesse - Age Fibra</title>
   <style>
     :root {
-      --bg: #fff7ed;
+      --bg: #fff7ed; /* suave */
       --card: #ffffff;
-      --accent: #ff7a00;
+      --brand: #ff7a00; /* laranja Age */
+      --brand-dark: #e06b00;
       --muted: #7a4b00;
+      --accent-contrast: #ffffff;
+      --surface-2: #f7f5f2;
+      --success: #0b3f88;
     }
-    * { box-sizing: border-box; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; }
-    body { margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
-    .card { width: 100%; max-width: 720px; background: var(--card); border-radius: 12px; padding: 28px; box-shadow: 0 8px 30px rgba(20,20,40,0.06); }
-    h1 { margin: 0 0 8px; font-size: 20px; }
-    p.lead { margin: 0 0 20px; color: var(--muted); }
-    form { display: grid; gap: 12px; }
-    label { font-size: 13px; color: #111827; }
-    input[type=text], input[type=tel], select {
+
+    /* Reset / base */
+    * { box-sizing: border-box; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif; }
+    html,body { height:100%; }
+    body { margin: 0; background: linear-gradient(180deg, var(--bg), #fff); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+
+    /* Card */
+    .card { width: 100%; max-width: 760px; background: var(--card); border-radius: 14px; padding: 20px; box-shadow: 0 10px 30px rgba(20,20,40,0.08); border-left: 6px solid rgba(255,122,0,0.06); }
+
+    .header { display: flex; gap: 16px; align-items: center; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    #logo { height:48px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(255,122,0,0.08)); }
+    h1 { margin: 0; font-size: 20px; color: #111827; }
+    p.lead { margin: 6px 0 18px; color: var(--muted); }
+
+    /* Offer banner */
+    .offer {
+      display:flex; align-items:baseline; gap:12px; justify-content:space-between; background: linear-gradient(90deg, rgba(255,250,245,1), rgba(255,245,235,1)); padding:12px; border-radius:10px; border:1px solid rgba(255,122,0,0.06); margin:14px 0;
+    }
+    .offer-left { display:flex; gap:12px; align-items:baseline; }
+    .offer-title { font-weight:700; font-size:18px; color:#111827; }
+    .offer-price { font-weight:800; font-size:18px; color:var(--brand); }
+    .offer-sub { font-size:12px; color:var(--muted); margin-left:6px; }
+    .consult-link { font-size:11px; color:#6b3a00; margin-left:6px; text-decoration:underline dotted; cursor:pointer; }
+
+    form { display: grid; gap:12px; }
+    label { font-size:13px; color:#111827; display:block; margin-bottom:6px; }
+
+    input[type=text], input[type=tel], select, .radio-group input[type=radio] {
       width: 100%;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border: 1px solid #e6e9ef;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 14px;
+      background: white;
     }
-    .actions { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    @media (max-width:560px){ .row{grid-template-columns:1fr;} }
+
+    .radio-group { display:flex; gap:12px; align-items:center; }
+    .radio-group label { display:flex; gap:8px; align-items:center; padding:8px 10px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
+    .radio-group input[type=radio]:checked + span { font-weight:700; }
+
+    /* Buttons */
+    .actions { display:flex; gap:12px; align-items:center; margin-top:6px; }
     button {
-      background: var(--accent);
-      color: #fff;
+      background: linear-gradient(180deg,var(--brand),var(--brand-dark));
+      color: var(--accent-contrast);
       border: 0;
-      padding: 10px 14px;
-      border-radius: 8px;
+      padding: 12px 16px;
+      border-radius: 10px;
       cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(255,122,0,0.18);
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      display:inline-flex; align-items:center; gap:8px; justify-content:center;
     }
+    button:hover { transform: translateY(-2px); }
+    button:active { transform: translateY(0); }
+
     button.secondary {
       background: transparent;
-      color: var(--accent);
-      border: 1px solid #dbe7ff;
+      color: var(--brand);
+      border: 1px solid rgba(255,122,0,0.14);
+      box-shadow: none;
+      font-weight:600;
+      padding:10px 14px;
     }
-    .result {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #f3f7ff;
-      color: #0b3f88;
-    }
-    .radio-group { display: flex; gap: 12px; align-items: center; }
-    small.hint { color: var(--muted); }
-    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+
+    button[disabled] { opacity:0.6; cursor: not-allowed; transform:none; }
+
+    .result { margin-top:12px; padding:12px; border-radius:10px; background:#f3f7ff; color:var(--success); font-weight:600; }
+    .error { background: #fff5f5; color: #8b0d0d; font-weight:600; }
+
+    small.hint { color:var(--muted); display:block; margin-top:6px; }
+    .footnote { font-size:12px; color:#6b3a00; margin-top:8px; }
+
+    /* Tiny assist */
+    .muted-sm { font-size:12px; color:#6b3a00; }
+      .site-footer { position:fixed; left:50%; transform:translateX(-50%); bottom:12px; font-size:11px; color:rgba(122,75,0,0.85); opacity:0.95; background:transparent; padding:6px 10px; border-radius:8px; z-index:40; pointer-events:auto; } @media (max-width:560px){ .site-footer{ bottom:8px; font-size:10px; } }
+    .site-footer a{ color:var(--brand); text-decoration:none; font-weight:600; }
   </style>
 </head>
 <body>
   <main class="card">
     <div class="header">
-      <img id="logo" src="logo.png" alt="Age Fibra" style="height:48px;object-fit:contain">
-      <h1>Formulário de Interesse</h1>
+      <div class="brand">
+        <img id="logo" src="logo.png" alt="Age Fibra">
+        <div>
+          <h1>Formulário de Interesse</h1>
+          <div class="muted-sm">Demostre interesse na melhor fibra da região</div>
+        </div>
+      </div>
     </div>
-    <p class="lead">Preencha os dados abaixo para demonstrar interesse em nossa internet de 1000 megas por R$99,90.</p>
+
+    <p class="lead">Preencha os dados abaixo para demonstrar interesse em nossa internet de 1000 megas.</p>
+
+    <div class="offer" role="region" aria-label="Oferta principal">
+      <div class="offer-left">
+        <div>
+          <div class="offer-title">Internet Age — <span class="offer-price">1000 Mb</span></div>
+          <div class="offer-price">R$ 99,90</div>
+        </div>
+        <div class="offer-sub">* <span class="muted-sm">Consultar condições</span></div>
+      </div>
+      <div class="offer-right muted-sm" style="text-align:right;">
+        <div>Instalação e disponibilidade sujeitas a análise.</div>
+        <div style="font-size:12px;margin-top:6px;color:#8a4e00">Promoção por tempo limitado</div>
+      </div>
+    </div>
 
     <form id="interestForm" autocomplete="on">
-      <div>
-        <label for="name">Seu nome</label>
-        <input id="name" name="name" type="text" required placeholder="Ex: João da Silva">
+      <div class="row">
+        <div>
+          <label for="name">Seu nome</label>
+          <input id="name" name="name" type="text" required placeholder="Ex: João da Silva">
+        </div>
+
+        <div>
+          <label for="phone">Telefone</label>
+          <input id="phone" name="phone" type="tel" required placeholder="(xx) 9xxxx-xxxx">
+        </div>
       </div>
 
       <div>
-        <label for="condominio">Condomínio</label>
+        <label for="condominio">Condomínio / Endereço</label>
         <input id="condominio" name="condominio" type="text" required placeholder="Ex: Residencial Asa Norte">
       </div>
 
@@ -76,39 +151,47 @@
       </div>
 
       <div>
-        <label for="phone">Telefone</label>
-        <input id="phone" name="phone" type="tel" required placeholder="Digite seu telefone">
-      </div>
-
-      <div>
-        <label>Gostaria de ter 1000 megas de internet por R$ 99,90?</label>
+        <label id="question-1000">Gostaria de ter 1000 megas de internet por R$ 99,90?</label>
         <div class="radio-group" role="radiogroup" aria-labelledby="question-1000">
-          <label><input type="radio" name="interest1000" value="Sim" required> Sim</label>
-          <label><input type="radio" name="interest1000" value="Não"> Não</label>
+          <label><input type="radio" name="interest1000" value="Sim" required><span>Sim</span></label>
+          <label><input type="radio" name="interest1000" value="Não"><span>Não</span></label>
         </div>
       </div>
 
       <div class="actions">
-        <button type="submit">Enviar</button>
+        <button type="submit" id="submitBtn">Enviar interesse</button>
         <button type="button" class="secondary" id="clearBtn">Limpar</button>
       </div>
 
       <div id="message" aria-live="polite"></div>
+
+      <div class="footnote">* Consulte disponibilidade por endereço. Valores válidos enquanto durarem os estoques/promos.</div>
     </form>
   </main>
+
+  <footer class="site-footer">© <span id="footer-year"></span> Powered by <a href="#" id="footer-author">João Vieira</a></footer>
 
   <script>
     const form = document.getElementById('interestForm');
     const message = document.getElementById('message');
     const clearBtn = document.getElementById('clearBtn');
+    const submitBtn = document.getElementById('submitBtn');
 
     const scriptURL = "https://script.google.com/macros/s/AKfycbyKmcRwuoiC7j-260YRbSSsmpLVrsbqX8gFwJgzxxhJr5ViY0fhyveLkRCJhYE0pCvDxA/exec";
+
+    function setMessage(html, isError=false){
+      message.innerHTML = `<div class="result ${isError? 'error':''}">${html}</div>`;
+    }
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      // Disable to prevent duplo envio
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      setMessage('Enviando...');
+
       const data = new FormData(form);
-      message.innerHTML = "<p style='color:#7a4b00;'>Enviando...</p>";
 
       fetch(scriptURL, { method: 'POST', body: data })
         .then(response => {
@@ -116,11 +199,16 @@
           return response.text();
         })
         .then(() => {
-          message.innerHTML = "<p style='color:green;'>✅ Dados enviados com sucesso!</p>";
+          setMessage('✅ Dados enviados com sucesso!');
           form.reset();
         })
-        .catch(() => {
-          message.innerHTML = "<p style='color:red;'>❌ Ocorreu um erro ao enviar. Tente novamente.</p>";
+        .catch((err) => {
+          console.error(err);
+          setMessage('❌ Ocorreu um erro ao enviar. Tente novamente.', true);
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar interesse';
         });
     });
 
@@ -129,5 +217,6 @@
       message.innerHTML = '';
     });
   </script>
+  <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
