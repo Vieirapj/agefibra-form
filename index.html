@@ -43,8 +43,24 @@
     form { display: grid; gap:12px; }
     label { font-size:13px; color:#111827; display:block; margin-bottom:6px; }
 
-    input[type=text], input[type=tel], select {\n      width: 100%;\n      padding: 12px 14px;\n      border: 1px solid #e6e9ef;\n      border-radius: 10px;\n      font-size: 14px;\n      background: white;\n    }\n\n    /* Radios: styled separately to avoid layout break */\n    .radio-group input[type=radio] {\n      width: auto;\n      margin-right: 6px;\n      accent-color: var(--brand);\n    }\n    .radio-group label { display: inline-flex; gap:8px; align-items: center; padding:8px 10px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
-    .radio-group input[type=radio]:focus { outline: 2px solid rgba(255,122,0,0.18); outline-offset:2px; }\n    .radio-group input[type=radio]:checked + span { font-weight:700; }
+    input[type=text], input[type=tel], select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #e6e9ef;
+      border-radius: 10px;
+      font-size: 14px;
+      background: white;
+    }
+
+    /* Radios: styled separately to avoid layout break */
+    .radio-group input[type=radio] {
+      width: auto;
+      margin-right: 6px;
+      accent-color: var(--brand);
+    }
+    .radio-group label { display: inline-flex; gap:8px; align-items: center; padding:8px 10px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
+    .radio-group input[type=radio]:focus { outline: 2px solid rgba(255,122,0,0.18); outline-offset:2px; }
+    .radio-group input[type=radio]:checked + span { font-weight:700; }
 
     .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     @media (max-width:560px){ .row{grid-template-columns:1fr;} /* mobile-specific tweaks */
