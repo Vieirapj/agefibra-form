@@ -24,9 +24,9 @@
     /* Card */
     .card { width: 100%; max-width: 760px; background: var(--card); border-radius: 14px; padding: 20px; box-shadow: 0 10px 30px rgba(20,20,40,0.08); border-left: 6px solid rgba(255,122,0,0.06); }
 
-    .header { display: flex; gap: 16px; align-items: center; }
+    .header { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .brand { display:flex; align-items:center; gap:12px; }
-    #logo { height:48px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(255,122,0,0.08)); }
+    #logo { height: auto; max-width: 120px; width: 100%; object-fit: contain; }
     h1 { margin: 0; font-size: 20px; color: #111827; }
     p.lead { margin: 6px 0 18px; color: var(--muted); }
 
@@ -43,17 +43,30 @@
     form { display: grid; gap:12px; }
     label { font-size:13px; color:#111827; display:block; margin-bottom:6px; }
 
-    input[type=text], input[type=tel], select, .radio-group input[type=radio] {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #e6e9ef;
-      border-radius: 10px;
-      font-size: 14px;
-      background: white;
-    }
+    input[type=text], input[type=tel], select {\n      width: 100%;\n      padding: 12px 14px;\n      border: 1px solid #e6e9ef;\n      border-radius: 10px;\n      font-size: 14px;\n      background: white;\n    }\n\n    /* Radios: styled separately to avoid layout break */\n    .radio-group input[type=radio] {\n      width: auto;\n      margin-right: 6px;\n      accent-color: var(--brand);\n    }\n    .radio-group label { display: inline-flex; gap:8px; align-items: center; padding:8px 10px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
+    .radio-group input[type=radio]:focus { outline: 2px solid rgba(255,122,0,0.18); outline-offset:2px; }\n    .radio-group input[type=radio]:checked + span { font-weight:700; }
 
     .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     @media (max-width:560px){ .row{grid-template-columns:1fr;} /* mobile-specific tweaks */
+
+      body { padding: 14px; align-items: flex-start; }
+      .card { margin: 8px; padding: 18px; border-radius:12px; box-shadow: 0 8px 24px rgba(20,20,40,0.06); max-width: 100%; overflow: visible; margin-top:18px; }
+      h1 { font-size:18px; }
+      .offer { flex-direction:column; align-items:flex-start; gap:8px; padding:12px; }
+      .offer-left { width:100%; }
+      .offer-right { width:100%; text-align:left; }
+      .offer-title { font-size:16px; }
+      .offer-price { font-size:16px; }
+
+      input[type=text], input[type=tel], select { padding:14px 12px; font-size:15px; }
+      .radio-group label { padding:10px 12px; border-radius:10px; }
+
+      .actions { flex-direction:column; gap:10px; }
+      button { width:100%; padding:14px 16px; font-size:15px; }
+      button.secondary { width:100%; }
+
+      .site-footer { position:static; transform:none; left:auto; bottom:auto; margin-top:10px; text-align:center; }
+    } /* mobile-specific tweaks */
 
       body { padding: 14px; }
       .card { margin: 8px; padding: 18px; border-radius:12px; box-shadow: 0 8px 24px rgba(20,20,40,0.06); }
