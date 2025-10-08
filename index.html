@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Formulário de Interesse - 1000 Megas</title>
+  <style>
+    :root {
+      --bg: #fff7ed;
+      --card: #ffffff;
+      --accent: #ff7a00;
+      --muted: #7a4b00;
+    }
+    * { box-sizing: border-box; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; }
+    body { margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+    .card { width: 100%; max-width: 720px; background: var(--card); border-radius: 12px; padding: 28px; box-shadow: 0 8px 30px rgba(20,20,40,0.06); }
+    h1 { margin: 0 0 8px; font-size: 20px; }
+    p.lead { margin: 0 0 20px; color: var(--muted); }
+    form { display: grid; gap: 12px; }
+    label { font-size: 13px; color: #111827; }
+    input[type=text], input[type=tel], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e6e9ef;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .actions { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid #dbe7ff;
+    }
+    .result {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f3f7ff;
+      color: #0b3f88;
+    }
+    .radio-group { display: flex; gap: 12px; align-items: center; }
+    small.hint { color: var(--muted); }
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="header">
+      <img id="logo" src="logo.png" alt="Age Fibra" style="height:48px;object-fit:contain">
+      <h1>Formulário de Interesse</h1>
+    </div>
+    <p class="lead">Preencha os dados abaixo para demonstrar interesse em nossa internet de 1000 megas por R$99,90.</p>
+
+    <form id="interestForm" autocomplete="on">
+      <div>
+        <label for="name">Seu nome</label>
+        <input id="name" name="name" type="text" required placeholder="Ex: João da Silva">
+      </div>
+
+      <div>
+        <label for="condominio">Condomínio</label>
+        <input id="condominio" name="condominio" type="text" required placeholder="Ex: Residencial Asa Norte">
+      </div>
+
+      <div>
+        <label for="internet">Sua internet atual (operadora/velocidade)</label>
+        <input id="internet" name="internet" type="text" required placeholder="Ex: Vivo Fibra 200 Mbps">
+      </div>
+
+      <div>
+        <label for="phone">Telefone</label>
+        <input id="phone" name="phone" type="tel" required placeholder="Digite seu telefone">
+      </div>
+
+      <div>
+        <label>Gostaria de ter 1000 megas de internet por R$ 99,90?</label>
+        <div class="radio-group" role="radiogroup" aria-labelledby="question-1000">
+          <label><input type="radio" name="interest1000" value="Sim" required> Sim</label>
+          <label><input type="radio" name="interest1000" value="Não"> Não</label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Enviar</button>
+        <button type="button" class="secondary" id="clearBtn">Limpar</button>
+      </div>
+
+      <div id="message" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('interestForm');
+    const message = document.getElementById('message');
+    const clearBtn = document.getElementById('clearBtn');
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyKmcRwuoiC7j-260YRbSSsmpLVrsbqX8gFwJgzxxhJr5ViY0fhyveLkRCJhYE0pCvDxA/exec";
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      message.innerHTML = "<p style='color:#7a4b00;'>Enviando...</p>";
+
+      fetch(scriptURL, { method: 'POST', body: data })
+        .then(response => {
+          if (!response.ok) throw new Error('Erro na resposta');
+          return response.text();
+        })
+        .then(() => {
+          message.innerHTML = "<p style='color:green;'>✅ Dados enviados com sucesso!</p>";
+          form.reset();
+        })
+        .catch(() => {
+          message.innerHTML = "<p style='color:red;'>❌ Ocorreu um erro ao enviar. Tente novamente.</p>";
+        });
+    });
+
+    clearBtn.addEventListener('click', () => {
+      form.reset();
+      message.innerHTML = '';
+    });
+  </script>
+</body>
+</html>
